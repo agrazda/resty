@@ -1,8 +1,16 @@
 import React from 'react';
+// import { useState } from 'React';
 
 import './form.scss';
 
 function Form(props) {
+
+  // const[inputValue, setImputValue] = useState('');
+
+  // const handleInput = (e) => {
+  //   let { value } = e.target;
+  //   setInputValue(value);
+  // }
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -19,7 +27,9 @@ function Form(props) {
         <form onSubmit={handleSubmit}>
           <label >
             <span>URL: </span>
-            <input name='url' type='text' />
+            <input 
+              name='url' 
+              type='text' />
             <button type="submit">GO!</button>
           </label>
           <label className="methods">
