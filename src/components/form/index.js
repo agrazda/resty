@@ -1,25 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './form.scss';
 
 function Form(props) {
 
   const[requestData, setRequestData] = useState({})
   const[requestUrl, setRequestUrl] = useState('')
+  const [activeMethod, setActiveMethod] = useState('');
 
 
   const handleSubmit = e => {
     e.preventDefault();
     const formData = {
+      method: requestData,
       url: requestUrl,
-      body: JSON.parse(requestData),
+      text: requestUrl
     };
     props.handleApiCall(formData);
   }
 
+  const handleActive = (target) => {
+    if (activeMethod) {
+      activeMethod.classList.remove('active');
+    }
+    setActiveMethod(target);
+    target.classList.add('active');
+  };
+
   const handleClick = (e) => {
-    let { value } = e.target;
+    let method = e.target.id.toUpperCase();
+    setRequestsData(method);
     props.setRequestParams({...props.requestParams, method: value})
+
+    handleActive(e.target);
   }
+
+  useEffect(() => {
+    console.log('Updated.');
+  }, [requestUrl]);
 
     return (
       <>

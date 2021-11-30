@@ -15,14 +15,14 @@ function App() {
   const [requestParams, setRequestParams] = useState({});
 
 
-  const callApi = (formParams) => {
+  const callApi = async (formParams) => {
+    let API_URL = formParams.url;
+    const response = await axios.get(API_URL);
     // mock output
     const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
+      Headers: response.headers,
+      count: response.data.count,
+      Response: response.data.results
     };
     setData(data);
     setRequestParams({...requestParams, ...formParams});
@@ -32,12 +32,14 @@ function App() {
     return (
       <>
         <Header />
-        <div>Request Method: {requestParams.method}</div>
-        <div>URL: {requestParams.url}</div>
         <Form 
           setRequestParams={setRequestParams} 
           requestParams={requestParams}
           handleApiCall={callApi} />
+        <section>
+          <div>Request Method: {requestParams.method}</div>
+          <div>URL: {requestParams.url}</div>
+          </section>  
         {data ? <Results data={data} /> : <p>loading...</p>}
         <Footer />
       </>
