@@ -1,47 +1,47 @@
-import React from 'react';
-// import { useState } from 'React';
-
+import { useState } from 'react';
 import './form.scss';
 
 function Form(props) {
 
-  // const[inputValue, setImputValue] = useState('');
+  const[requestData, setRequestData] = useState({})
+  const[requestUrl, setRequestUrl] = useState('')
 
-  // const handleInput = (e) => {
-  //   let { value } = e.target;
-  //   setInputValue(value);
-  // }
 
   const handleSubmit = e => {
     e.preventDefault();
     const formData = {
-      method:'GET',
-      url: 'https://pokeapi.co/api/v2/pokemon',
+      url: requestUrl,
+      body: JSON.parse(requestData),
     };
     props.handleApiCall(formData);
   }
 
-  
+  const handleClick = (e) => {
+    let { value } = e.target;
+    props.setRequestParams({...props.requestParams, method: value})
+  }
+
     return (
       <>
         <form onSubmit={handleSubmit}>
           <label >
             <span>URL: </span>
             <input 
+              onChange= {(e) => setRequestUrl(e.target.value)}
               name='url' 
               type='text' />
             <button type="submit">GO!</button>
           </label>
           <label className="methods">
-            <span id="get">GET</span>
-            <span id="post">POST</span>
-            <span id="put">PUT</span>
-            <span id="delete">DELETE</span>
+            <button type= 'button' onClick={handleClick} id="get" value="GET">GET</button>
+            <button type= 'button' onClick={handleClick} id="post" value="POST">POST</button>
+            <button type= 'button' onClick={handleClick} id="put" value="PUT">PUT</button>
+            <button type= 'button' onClick={handleClick} id="delete" value="DELETE">DELETE</button>
           </label>
+          <textarea onChange={(e) => setRequestData(e.target.value)} name='json'/>
         </form>
       </>
     );
-  
 }
 
 export default Form;
