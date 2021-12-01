@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useReducer } from 'react';
 
 import './app.scss';
 
@@ -11,8 +12,32 @@ import Results from './components/results';
 
 function App() {
 
-  const [data, setData] = useState(null);
-  const [requestParams, setRequestParams] = useState({});
+  // const [data, setData] = useState(null);
+  // const [requestParams, setRequestParams] = useState({});
+
+  const initialState = {
+    loading: false,
+    results: {},
+    history: [
+      {
+        method: '',
+        url: '',
+        results: {},
+      }
+    ],
+  };
+
+  function reducer( state, action ) {
+
+    switch( action.type ) {
+      case '':
+        return {};
+      case '':
+        return {};
+      default: 
+         throw new Error(); 
+    }
+  }
 
 
   const callApi = async (formParams) => {
